@@ -1,0 +1,27 @@
+body {
+  background-color: rgb(108, 87, 87);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: aqua;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(22, 198, 137, 0.1);
+}
+
+.form {
+  margin-bottom: 30px;
+}
+.h1 {
+  background-color: chocolate;
+}
+
+.result {
+  border: 1px solid #7ca928;
+  padding: 30px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
