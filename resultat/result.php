@@ -38,15 +38,15 @@ for ($i = 1; $i <= $_POST["nombre_Adresse"]; $i++) {
     $type = $_POST["type_$i"];
     $city = $_POST["city_$i"];
     $zipcode = $_POST["zipcode_$i"];
+    
     if (!$stmt->execute()) {
         die("Erreur d'exécution de la requête: " . $stmt->error);
-    //$stmt->execute();
     }
 
 }
 
 
-// Fermeture de la requête
+// Fermeture de la requête 
 $stmt->close();
 
 // Pour close mes connexions

@@ -26,7 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "<input type='number' name='street_nb_$i' required>";
                     //TYPE:
             echo "<label for='type_$i'>Type:</label>";
-            echo "<input type='text' name='type_$i' maxlength='30' required>";
+            echo "<select name='type_$i' required>";
+            echo "<option value='Livraison'>Livraison</option>";
+            echo "<option value='Facturation'>Facturation</option>";
+            echo "<option value='Lieu'>Lieu</option>";
+            echo "<option value='Autres'>Autres</option>";
+            echo "</select>";
                 //CITY:
             echo "<label for='city_$i'>City:</label>";
             echo "<select name='city_$i' required>";
