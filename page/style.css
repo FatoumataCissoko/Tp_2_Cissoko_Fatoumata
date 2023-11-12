@@ -12,14 +12,14 @@ body {
   box-shadow: 0 0 10px rgba(22, 198, 137, 0.1);
 }
 
-.form {
+.address-form{
   margin-bottom: 30px;
 }
 .h1 {
   background-color: chocolate;
 }
 
-.result {
+.adresse-result {
   border: 1px solid #7ca928;
   padding: 30px;
   margin-bottom: 20px;
