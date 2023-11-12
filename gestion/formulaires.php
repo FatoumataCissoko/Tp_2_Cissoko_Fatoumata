@@ -1,21 +1,21 @@
 <a href="index.php">Retour a l'accueil</a>
 
 <?php
-// Vérifier si la requête est de type POST
+// Vérifier si la requête est de type POST:
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer le nombre d'adresses et s'assurer qu'il est défini dans les données POST
+    // Récupérer le nombre d'adresses et s'assurer qu'il est défini dans les données POST:
     $nombre_Adresse = isset($_POST["nombre_Adresse"]) ? intval($_POST["nombre_Adresse"]) : 0;
 
-    // Vérifier que le nombre est positif
+    // Vérifier que le nombre est positif:
     if ($nombre_Adresse <= 0) {
         echo "<p>Le nombre d'adresses doit être positif SVP.</p>";
     } else {
-        // Afficher le formulaire d'adresse
+        // Afficher le formulaire d'adresse:
         echo "<div class='container'>";
         echo "<h2>Remplissez les adresses</h2>";
         echo "<form action='../resultat/result.php' method='post'>";
 
-        // Boucle pour générer les champs d'adresse en fonction du nombre spécifié
+        // Boucle pour générer les champs d'adresse en fonction du nombre spécifique:
         for ($i = 1; $i <= $nombre_Adresse; $i++) {
             echo "<div class='address-form'>";
             echo "<h2> Adresse $i</h2>";
@@ -43,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "</div>";
         }
 
-        // Ajouter un champ caché pour stocker le nombre d'adresses
+        // Ajouter un champ cacher pour stocker le nombre d'adresses:
         echo "<input type='hidden' name='nombre_Adresse' value='$nombre_Adresse'>";
         echo "<br>";
-        // Bouton de soumission du formulaire
+        // Bouton de soumission du formulaire:
         echo "<input type='submit' name='submit' value='Soumettre'>";
         echo "</form>";
         echo "<br>";
@@ -55,46 +55,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Connexion à la base de données
+// Connexion à la BD:
 $server_name = 'localhost';
 $user_name = "root";
 $pwd = "";
 $BaseDonnees_name = "ecom1_tp2";
 
-// Connexion à la base de données MySQL
+// Connexion à la BD MySQL:
 $connexion = mysqli_connect($server_name, $user_name, $pwd, $BaseDonnees_name);
 
-// Vérifier si la connexion a échoué
+// Vérifier si la connexion a échoué:
 if (mysqli_connect_error()) {
     die("Erreur de connexion " . mysqli_connect_error());
 }
 
-// Sélectionner la base de données
+// Sélectionner la BD:
 mysqli_select_db($connexion, $BaseDonnees_name);
 
-// Vérifier si la requête est de type POST
+// Vérifier si la requête est de type POST:
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Préparer la requête d'insertion
+    // Préparer la requête d'insertion:
     $stmt = mysqli_prepare($connexion, "INSERT INTO address (street, street_nb, type, city, zipcode) VALUES (?, ?, ?, ?, ?)");
 
-    // Vérifier si la préparation de la requête a échoué
+    // Vérifier si la préparation de la requête a échoué:
     if (!$stmt) {
         die("Erreur de préparation de la requête: " . mysqli_error($connexion));
     }
 
-    // Variables pour les données à insérer
+    // Variables pour les données à insérer:
     $street = "";
     $street_nb = 0;
     $type = "";
     $city = "";
     $zipcode = "";
 
-    // Lier les paramètres de la requête
+    // Lier les paramètres de la requête:
     mysqli_stmt_bind_param($stmt, "sisss", $street, $street_nb, $type, $city, $zipcode);
 
-    // Boucle pour récupérer et insérer les données pour chaque adresse
+    // Boucle pour récupérer et insérer les données pour chaque adresse:
     for ($i = 1; $i <= $nombre_Adresse; $i++) {
-        // Vérifier si les données de l'adresse actuelle existent dans la requête POST
+        // Vérifier si les données de l'adresse actuelle existent dans la requête POST:
         if (isset($_POST["street_$i"])) {
             $street = $_POST["street_$i"];
             $street_nb = $_POST["street_nb_$i"];
@@ -102,21 +102,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $city = $_POST["city_$i"];
             $zipcode = $_POST["zipcode_$i"];
 
-            // Exécuter la requête d'insertion
+            // Exécuter la requête d'insertion:
             if (!mysqli_stmt_execute($stmt)) {
                 die("Erreur d'exécution de la requête: " . mysqli_stmt_error($stmt));
             }
         }
     }
 
-    // Fermeture du statement
+    // Fermeture du statement:
     mysqli_stmt_close($stmt);
 }
 
-    // Fermeture de la connexion à la base de données
+    // Fermeture de la connexion à la BD:
     mysqli_close($connexion);
 
-    // Affichage des adresses soumises pour la validation
+    // Affichage des adresses soumises pour la validation:
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "<div class='container'>";
     echo "<h2>Adresse soumise</h2>";
@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     for ($i = 1; $i <= $nombre_Adresse; $i++) {
         echo "<div class='adresse-result'>";
         echo "<h2>Adresse $i</h2>";
-        // Vérifier si les données de l'adresse actuelle existent dans la requête POST
+        // Vérifier si les données de l'adresse actuelle existent dans la requête POST:
         if (isset($_POST["street_$i"])) {
             echo "<p><strong> Street: </strong> " . htmlspecialchars($_POST["street_$i"]) . "</p>";
             echo "<p><strong> Street_nb: </strong> " . htmlspecialchars($_POST["street_nb_$i"]) . "</p>";
