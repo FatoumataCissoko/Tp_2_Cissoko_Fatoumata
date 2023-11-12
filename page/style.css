@@ -15,7 +15,7 @@ body {
 .address-form{
   margin-bottom: 30px;
 }
-.h1 {
+.h1,h2 {
   background-color: chocolate;
 }
 

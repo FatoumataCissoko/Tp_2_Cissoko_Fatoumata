@@ -1,30 +1,23 @@
-<a href="index.php">Retour a l'accueil</a>
+<a href="../index.php">Retour a l'accueil</a>
+
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Recuperer le nombre d'adresse et s'assurer que sa existe dans les donnees POST:
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre_Adresse = isset($_POST["nombre_Adresse"]) ? intval($_POST["nombre_Adresse"]) : 0;
-   
-    // Verifier que le nombre est positif:
-        if ($nombre_Adresse <= 0) {
-            echo "<p>Le nombre d'adresses doit être positif SVP.</p>";
-        } else {
 
+    if ($nombre_Adresse <= 0) {
+        echo "<p>Le nombre d'adresses doit être positif SVP.</p>";
+    } else {
         echo "<div class='container'>";
         echo "<h2>Remplissez les adresses</h2>";
-        echo "<form action='result.php' method='post'>";
-        
-        //La saisie des adresses par l'utilisateur:
-                //STREET:
+        echo "<form action='../resultat/result.php' method='post'>";
+
         for ($i = 1; $i <= $nombre_Adresse; $i++) {
             echo "<div class='address-form'>";
             echo "<h2> Adresse $i</h2>";
             echo "<label for='street_$i'>Street:</label>";
             echo "<input type='text' name='street_$i' maxlength='60' required>";
-                    //STREET_NB:
             echo "<label for='street_nb_$i'>Street_nb:</label>";
             echo "<input type='number' name='street_nb_$i' required>";
-                    //TYPE:
             echo "<label for='type_$i'>Type:</label>";
             echo "<select name='type_$i' required>";
             echo "<option value='Livraison'>Livraison</option>";
@@ -32,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "<option value='Lieu'>Lieu</option>";
             echo "<option value='Autres'>Autres</option>";
             echo "</select>";
-                //CITY:
             echo "<label for='city_$i'>City:</label>";
             echo "<select name='city_$i' required>";
             echo "<option value='Montreal'>Montreal</option>";
@@ -40,30 +32,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             echo "<option value='Toronto'>Toronto</option>";
             echo "<option value='Quebec'>Quebec</option>";
             echo "</select>";
-                    //ZIPCODE:
             echo "<label for='zipcode_$i'>Zip Code:</label>";
             echo "<input type='text' name='zipcode_$i' pattern='\w{6}' title='Six carateres required' required>";
-
             echo "<br>";
             echo "</div>";
-
-
         }
-    echo "<input type='hidden' name='nombre_Adresse' value='$nombre_Adresse'>";
-    echo "<br>";
-    echo "<input type='submit' value='Soumettre'>";
-    
-   
-    echo "</form>";
-    echo "<br>";
-    echo "<br>";
-    echo "</div>";
 
-}
-     
+        echo "<input type='hidden' name='nombre_Adresse' value='$nombre_Adresse'>";
+        echo "<br>";
+        echo "<input type='submit' name='submit' value='Soumettre'>";
+        echo "</form>";
+        echo "<br>";
+        echo "<br>";
+        echo "</div>";
+    }
 }
 
-// Connexion à la BD
 $server_name = 'localhost';
 $user_name = "root";
 $pwd = "";
@@ -71,70 +55,64 @@ $BaseDonnees_name = "ecom1_tp2";
 
 $connexion = mysqli_connect($server_name, $user_name, $pwd, $BaseDonnees_name);
 
-// Validation de la connexion
-if ($connexion->connect_error) {
-    die("Erreur de connexion " . $connexion->connect_error);
+if (mysqli_connect_error()) {
+    die("Erreur de connexion " . mysqli_connect_error());
 }
 
-$connexion->select_db($BaseDonnees_name);
+mysqli_select_db($connexion, $BaseDonnees_name);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $stmt = $connexion->prepare("INSERT INTO address (street, street_nb, type, city, zipcode) VALUES (?, ?, ?, ?, ?)");
+    $stmt = mysqli_prepare($connexion, "INSERT INTO address (street, street_nb, type, city, zipcode) VALUES (?, ?, ?, ?, ?)");
 
     if (!$stmt) {
-        die("Erreur de préparation de la requête: " . $connexion->error);
+        die("Erreur de préparation de la requête: " . mysqli_error($connexion));
     }
 
-    $stmt->bind_param("sisss", $street, $street_nb, $type, $city, $zipcode);
+    $street = "";
+    $street_nb = 0;
+    $type = "";
+    $city = "";
+    $zipcode = "";
+
+    mysqli_stmt_bind_param($stmt, "sisss", $street, $street_nb, $type, $city, $zipcode);
 
     for ($i = 1; $i <= $nombre_Adresse; $i++) {
-        $street = $_POST["street_$i"];
-        $street_nb = $_POST["street_nb_$i"];
-        $type = $_POST["type_$i"];
-        $city = $_POST["city_$i"];
-        $zipcode = $_POST["zipcode_$i"];
-        
+        if (isset($POST["street$i"])) {
+            $street = $POST["street$i"];
+            $street_nb = $POST["street_nb$i"];
+            $type = $POST["type$i"];
+            $city = $POST["city$i"];
+            $zipcode = $POST["zipcode$i"];
 
-       
-if (!$stmt->execute()) {
-            die("Erreur d'exécution de la requête: " . $stmt->error);
+            if (!mysqli_stmt_execute($stmt)) {
+                die("Erreur d'exécution de la requête: " . mysqli_stmt_error($stmt));
+            }
         }
     }
 
-    $stmt->close();
+    mysqli_stmt_close($stmt);
 }
 
-$connexion->close();
-
-
-
-
-
+mysqli_close($connexion);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Affichage des adresses soumises pour la validation:
     echo "<div class='container'>";
     echo "<h2>Adresse soumise</h2>";
-    
-        for ($i = 1; $i <= $nombre_Adresse; $i++) {
-            echo "<div class='adresse-result'>";
-            echo "<h2>Adresse $i</h2>";
-            echo "<p><strong> Street: </strong> " . htmlspecialchars($_POST["street_$i"]) . "</p>";
-            echo "<p><strong> Street_nb: </strong> " . htmlspecialchars($_POST["street_nb_$i"]) . "</p>";
-            echo "<p><strong> Type: </strong> " . htmlspecialchars($_POST["type_$i"]) . "</p>";
-            echo "<p><strong> City: </strong> " . htmlspecialchars($_POST["city_$i"]) . "</p>";
-            echo "<p><strong> Zip Code: </strong> " . htmlspecialchars($_POST["zipcode_$i"]) . "</p>";
-            echo "<br>";
 
-        
-            echo "</div>";
+    for ($i = 1; $i <= $nombre_Adresse; $i++) {
+        echo "<div class='adresse-result'>";
+        echo "<h2>Adresse $i</h2>";
+        if (isset($POST["street$i"])) {
+            echo "<p><strong> Street: </strong> " . htmlspecialchars($POST["street$i"]) . "</p>";
+            echo "<p><strong> Street_nb: </strong> " . htmlspecialchars($POST["street_nb$i"]) . "</p>";
+            echo "<p><strong> Type: </strong> " . htmlspecialchars($POST["type$i"]) . "</p>";
+            echo "<p><strong> City: </strong> " . htmlspecialchars($POST["city$i"]) . "</p>";
+            echo "<p><strong> Zip Code: </strong> " . htmlspecialchars($POST["zipcode$i"]) . "</p>";
+            echo "<br>";
         }
+        echo "</div>";
+    }
 
     echo "</div>";
-
 }
-
 ?>
-
-
