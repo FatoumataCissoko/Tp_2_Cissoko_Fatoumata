@@ -1,8 +1,8 @@
 <a href="index.php">Retour a l'accueil</a>
 
 <?php
-// Vérifier si la requête est de type POST:
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Verification de la requête est de type POST:
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Récupérer le nombre d'adresses et s'assurer qu'il est défini dans les données POST:
     $nombre_Adresse = isset($_POST["nombre_Adresse"]) ? intval($_POST["nombre_Adresse"]) : 0;
 
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "</div>";
         }
 
-        // Ajouter un champ cacher pour stocker le nombre d'adresses:
+        // Ajouter un champ cacher,pour stocker le nombre d'adresses:
         echo "<input type='hidden' name='nombre_Adresse' value='$nombre_Adresse'>";
         echo "<br>";
         // Bouton de soumission du formulaire:
