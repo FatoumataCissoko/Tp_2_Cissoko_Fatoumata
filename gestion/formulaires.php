@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Récupérer le nombre d'adresses et s'assurer qu'il est défini dans les données POST:
     $nombre_Adresse = isset($_POST["nombre_Adresse"]) ? intval($_POST["nombre_Adresse"]) : 0;
 
-    // Vérifier que le nombre est positif:
+    // Vérifier que le nombre saisie par l'utilisteur est positif:
     if ($nombre_Adresse <= 0) {
         echo "<p>Le nombre d'adresses doit être positif SVP.</p>";
     } else {
@@ -19,10 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         for ($i = 1; $i <= $nombre_Adresse; $i++) {
             echo "<div class='address-form'>";
             echo "<h2> Adresse $i</h2>";
+                //STREET:
             echo "<label for='street_$i'>Street:</label>";
             echo "<input type='text' name='street_$i' maxlength='60' required>";
+                //STREET_NB:
             echo "<label for='street_nb_$i'>Street_nb:</label>";
             echo "<input type='number' name='street_nb_$i' required>";
+                //TYPE:
             echo "<label for='type_$i'>Type:</label>";
             echo "<select name='type_$i' required>";
             echo "<option value='Livraison'>Livraison</option>";
@@ -30,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "<option value='Lieu'>Lieu</option>";
             echo "<option value='Autres'>Autres</option>";
             echo "</select>";
+                //CITY:
             echo "<label for='city_$i'>City:</label>";
             echo "<select name='city_$i' required>";
             echo "<option value='Montreal'>Montreal</option>";
@@ -37,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "<option value='Toronto'>Toronto</option>";
             echo "<option value='Quebec'>Quebec</option>";
             echo "</select>";
+                //ZIP CODE:
             echo "<label for='zipcode_$i'>Zip Code:</label>";
             echo "<input type='text' name='zipcode_$i' pattern='\w{6}' title='Six carateres required' required>";
             echo "<br>";

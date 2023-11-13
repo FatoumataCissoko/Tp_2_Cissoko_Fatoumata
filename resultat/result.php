@@ -1,4 +1,4 @@
-<a href="../gestion/index.php">Accueil</a>
+<a href="../gestion/index.php">Accueil</a><br
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -39,9 +39,9 @@ for ($i = 1; $i <= $_POST["nombre_Adresse"]; $i++) {
    
 }
 
-     // Fermeture de la requête 
+     // Fermeture de la requête statement
      $stmt->close();
 
-    // Pour fermer mes connexions
+    // Pour fermer ma connexions
     mysqli_close($connexion);
 ?>
