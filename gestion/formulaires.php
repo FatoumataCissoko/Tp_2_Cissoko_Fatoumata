@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             echo "</select>";
                 //ZIP CODE:
             echo "<label for='zipcode_$i'>Zip Code:</label>";
-            echo "<input type='text' name='zipcode_$i' pattern='\w{6}' title='Six carateres required' required>";
+            echo "<input type='text' name='zipcode_$i' pattern='\w{6}' title='Six caracteres required' required>";
             echo "<br>";
             echo "</div>";
         }

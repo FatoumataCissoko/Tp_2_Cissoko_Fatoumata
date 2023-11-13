@@ -1,7 +1,7 @@
 <a href="../gestion/index.php">Accueil</a><br
 
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Connexion a la BD :
     $server_name = 'localhost';
