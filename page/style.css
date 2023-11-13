@@ -6,26 +6,25 @@ body {
 .container {
   max-width: 600px;
   margin: 50px auto;
-  background-color: rgb(221, 255, 0);
+  background-color: rgb(134, 150, 32);
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(22, 198, 137, 0.1);
+  box-shadow: 0 0 10px rgba(246, 250, 248, 0.1);
 }
 
 .address-form {
   margin-bottom: 30px;
 }
-.h1,
-h2 {
+.h1,h2 {
   background-color: rgb(247, 107, 7);
 }
 
 input[type="submit"]:hover {
-  background-color: #9eee09;
+  background-color: #b909ee;
 }
 
 .adresse-result {
-  border: 1px solid #2c3816;
+  border: 1px solid #f2f4ed;
   padding: 30px;
   margin-bottom: 20px;
   border-radius: 10px;
@@ -37,3 +36,11 @@ input[type="number"] {
   border: 1px solid #940606;
   border-radius: 3px;
 }
+
+label{
+  padding: auto;
+  margin-bottom: 15px;
+  background-color: aqua;
+}
+
+
