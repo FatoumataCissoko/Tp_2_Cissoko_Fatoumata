@@ -2,6 +2,9 @@ body {
   background-color: rgb(108, 87, 87);
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
+a:hover {
+  color: #8b0408;
+}
 
 .container {
   max-width: 600px;
@@ -15,7 +18,8 @@ body {
 .address-form {
   margin-bottom: 30px;
 }
-.h1,h2 {
+.h1,
+h2 {
   background-color: rgb(247, 107, 7);
 }
 
@@ -37,10 +41,8 @@ input[type="number"] {
   border-radius: 3px;
 }
 
-label{
+label {
   padding: auto;
   margin-bottom: 15px;
   background-color: aqua;
 }
-
-

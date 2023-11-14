@@ -1,5 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../page/style1.css">
+    <title>result</title>
+</head>
+<body>
+    
+</body>
+</html>
 <a href="../gestion/index.php">Accueil</a><br
-
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
