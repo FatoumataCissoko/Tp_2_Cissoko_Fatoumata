@@ -23,7 +23,7 @@
     $_SESSION["city" . $i] = $_POST["city_" . $i];
     $_SESSION["zipcode" . $i] = $_POST["zipcode" . $i];
   }
-// Enregistrement des données de chaque adresse dans la session
+// Enregistrement des données de chaques champs adresses dans la session
   for ($i = 0; $i < $_POST["nombre_Adresse"]; $i++) { ?>
   <!---Affichage des données dans un formulaire !-->
     <h2><?php echo "Adresse" . $i + 1 ?></h2>
@@ -47,7 +47,7 @@
     <?php } ?><br>
     <!-----button pour modifier le formulaire !--->
     <button id="btn_modify" formaction="formulaires1.php">Modifier</button>
-    <!-----button pour la soumission le formulaire !--->
+    <!-----button pour la soumission du formulaire dans la BD !--->
     <button type="submit">Soumettre</button>
 
     </form>
