@@ -1,22 +1,25 @@
-<?php 
-function insertAdresse( $data,$i)
+<?php
+// Fonction pour insérer une adresse dans la base de données
+
+function insertAdresse($data, $i)
 {
-   global $conn;
-   $query = "INSERT INTO address VALUES (NULL,?,?,?,?,?)";
-   if ($stmt = mysqli_prepare($conn, $query)) {
-      
-       mysqli_stmt_bind_param(
-           $stmt,
-           "sssss",
-           $data['street'.$i],
-           $data['street_nb'.$i],
-           $data['type'.$i],
-           $data['city'.$i],
-           $data['zipcode'.$i]
-       );
-
-       $result = mysqli_stmt_execute($stmt);
-   }
+    // Utilisation de la connexion à la base de données définie globalement
+    global $conn;
+    // Requête SQL pour l'insertion d'une adresse
+    $query = "INSERT INTO address VALUES (NULL,?,?,?,?,?)";
+    // Préparation de la requête SQL
+    if ($stmt = mysqli_prepare($conn, $query)) {
+        // Liaison des paramètres avec les valeurs
+        mysqli_stmt_bind_param(
+            $stmt,
+            "sssss",
+            $data['street' . $i],
+            $data['street_nb' . $i],
+            $data['type' . $i],
+            $data['city' . $i],
+            $data['zipcode' . $i]
+        );
+        // Exécution de la requête préparée
+        $result = mysqli_stmt_execute($stmt);
+    }
 }
-
-?>

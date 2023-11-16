@@ -1,14 +1,15 @@
 <a href="index.php">Retour a l'accueil</a>
 <?php
+// Démarrage de la session
 session_start();
 
-
+// Initialisation du nombre d'adresses
 if (isset($_SESSION["nombre"])) {
     $nbr = $_SESSION["nombre"];
 } else {
     $nbr = $_POST["nombre_Adresse"];
 }
-
+// Affichage du formulaire pour chaque adresse
 for ($i = 0; $i < $nbr; $i++) { ?>
 
 
@@ -26,6 +27,7 @@ for ($i = 0; $i < $nbr; $i++) { ?>
     <body>
         <div class="container">
             <h2><?php echo "Adresse" . $i + 1 ?></h2>
+            <!--- La saisie des adresses dans un formulaire !--->
             <form id="formulaires1" action="formulaires2.php" method="post">
                 <input hidden type="number" name="nombre_Adresse" value="<?php echo $nbr ?>">
                 <div class="div_formulaires1"> <label class="label0_formulaires1" for="nombre_Adresse">Street: </label>
@@ -38,10 +40,10 @@ for ($i = 0; $i < $nbr; $i++) { ?>
                 <div class="div_formulaires1"> <label class="label2_formulaires1" for=""> Type adresse: </label>
                     <select class="input2_formulaires1" name="<?php echo "type.$i" ?>" required>
                         <option value="<?php if (isset($_SESSION["type" . $i])) echo ($_SESSION["type" . $i]) ?>"><?php if (isset($_SESSION["type" . $i])) echo ($_SESSION["type" . $i]) ?> </option>
-                        <option value="Livraison">Lieu</option>
+                        <option value="Lieu">Lieu</option>
                         <option value="Livraison">Livraison</option>
-                        <option value="Facture">Facture</option>
-                        <option value="Autre">Autres</option>
+                        <option value="Facturation">Facturation</option>
+                        <option value="Autres">Autres</option>
                     </select>
                 </div>
                 <div class="div_formulaires1"> <label class="label3_formulaires1" for=""> City: </label>
@@ -57,6 +59,7 @@ for ($i = 0; $i < $nbr; $i++) { ?>
                     <input type="text" class="input4_formulaires1" name="<?php echo "zipcode" . $i ?>" value="<?php if (isset($_SESSION["zipcode" . $i])) echo ($_SESSION["zipcode" . $i]) ?>" pattern='\w{6}' title='Six caracteres required' required>
                 </div>
             <?php } ?>
+            <!-- Bouton de soumission du formulaire -->
             <button id="btn_submit" type="submit">Envoyer</button>
             </form>
         </div>

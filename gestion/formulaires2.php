@@ -12,7 +12,9 @@
 <body>
 
   <?php
+   // Démarrage de la session
   session_start();
+   // Enregistrement du nombre d'adresses dans la session
   $_SESSION["nombre"] = $_POST["nombre_Adresse"];
   for ($i = 0; $i <  $_POST["nombre_Adresse"]; $i++) {
     $_SESSION["street" . $i] = $_POST["street" . $i];
@@ -21,8 +23,9 @@
     $_SESSION["city" . $i] = $_POST["city_" . $i];
     $_SESSION["zipcode" . $i] = $_POST["zipcode" . $i];
   }
-
+// Enregistrement des données de chaque adresse dans la session
   for ($i = 0; $i < $_POST["nombre_Adresse"]; $i++) { ?>
+  <!---Affichage des données dans un formulaire !-->
     <h2><?php echo "Adresse" . $i + 1 ?></h2>
     <form action="../resultat/traitement.php" method="post">
       <input hidden type="text" name="nbr" value="<?php echo $_POST['nombre_Adresse'] ?>">
@@ -41,8 +44,10 @@
       <div><label for="nombre_Adresse">Zipcode: </label>
         <input type="text" name="<?php echo "zipcode" . $i ?>" value="<?php echo $_POST["zipcode" . $i] ?>">
       </div>
-    <?php } ?>
+    <?php } ?><br>
+    <!-----button pour modifier le formulaire !--->
     <button id="btn_modify" formaction="formulaires1.php">Modifier</button>
+    <!-----button pour la soumission le formulaire !--->
     <button type="submit">Soumettre</button>
 
     </form>
