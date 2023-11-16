@@ -26,7 +26,8 @@ Un select minimum doit être utilisé
 Vous devez ajouter un design CSS sur les deux formulaires.
 Remise
 Remettez votre projet sur Lea - Omnivox, en uploadant un fichier .txt contenant
+
 - Votre identification
 - un lien permettant de cloner le repository Github ou vous l’aurez hébergé
-Votre repo devra se nommer : tp_2_nom_prenom (exemple : tp_2_dussollier_julian)
-Pas de correction si le sujet n’est pas remis conformément à la consigne.
+  Votre repo devra se nommer : tp_2_nom_prenom (exemple : tp_2_dussollier_julian)
+  Pas de correction si le sujet n’est pas remis conformément à la consigne.

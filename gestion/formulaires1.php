@@ -1,74 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../page/style1.css">
-    <title>forms1</title>
-</head>
-<body>
-    
-</body>
-</html>
 <a href="index.php">Retour a l'accueil</a>
-
 <?php
-// Verification de la requête est de type POST:
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Récupérer le nombre d'adresses et s'assurer qu'il est défini dans les données POST:
-    $nombre_Adresse = isset($_POST["nombre_Adresse"]) ? intval($_POST["nombre_Adresse"]) : 0;
+session_start();
 
-    // Vérifier que le nombre saisie par l'utilisteur est positif:
-    if ($nombre_Adresse <= 0) {
-        echo "<p>Le nombre d'adresses doit être positif SVP.</p>";
-    } else {
-        // Afficher le formulaire d'adresse:
-        echo "<div class='container'>";
-        echo "<h2>Remplissez les adresses</h2>";
-        echo "<form action='../resultat/result.php' method='post'>";
 
-        // Boucle pour générer les champs d'adresse en fonction du nombre spécifique:
-        for ($i = 1; $i <= $nombre_Adresse; $i++) {
-            echo "<div class='address-form'>";
-            echo "<h2> Adresse $i</h2>";
-                //STREET:
-            echo "<label for='street_$i'>Street:</label>";
-            echo "<input type='text' name='street_$i' maxlength='60' required>";
-                //STREET_NB:
-            echo "<label for='street_nb_$i'>Street_nb:</label>";
-            echo "<input type='number' name='street_nb_$i' required>";
-                //TYPE:
-            echo "<label for='type_$i'>Type:</label>";
-            echo "<select name='type_$i' required>";
-            echo "<option value='Livraison'>Livraison</option>";
-            echo "<option value='Facturation'>Facturation</option>";
-            echo "<option value='Lieu'>Lieu</option>";
-            echo "<option value='Autres'>Autres</option>";
-            echo "</select>";
-                //CITY:
-            echo "<label for='city_$i'>City:</label>";
-            echo "<select name='city_$i' required>";
-            echo "<option value='Montreal'>Montreal</option>";
-            echo "<option value='Laval'>Laval</option>";
-            echo "<option value='Toronto'>Toronto</option>";
-            echo "<option value='Quebec'>Quebec</option>";
-            echo "</select>";
-                //ZIP CODE:
-            echo "<label for='zipcode_$i'>Zip Code:</label>";
-            echo "<input type='text' name='zipcode_$i' pattern='\w{6}' title='Six caracteres required' required>";
-            echo "<br>";
-            echo "</div>";
-        }
-
-        // Ajouter un champ cacher,pour stocker le nombre d'adresses:
-        echo "<input type='hidden' name='nombre_Adresse' value='$nombre_Adresse'>";
-        echo "<br>";
-        // Bouton de soumission du formulaire:
-        echo "<input type='submit' name='submit' value='Soumettre'>";
-        echo "</form>";
-        echo "<br>";
-        echo "<br>";
-        echo "</div>";
-    }
+if (isset($_SESSION["nombre"])) {
+    $nbr = $_SESSION["nombre"];
+} else {
+    $nbr = $_POST["nombre_Adresse"];
 }
-?>
+
+for ($i = 0; $i < $nbr; $i++) { ?>
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../page/style1.css">
+        <title>Formulaire saisie</title>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <h2><?php echo "Adresse" . $i + 1 ?></h2>
+            <form id="formulaires1" action="formulaires2.php" method="post">
+                <input hidden type="number" name="nombre_Adresse" value="<?php echo $nbr ?>">
+                <div class="div_formulaires1"> <label class="label0_formulaires1" for="nombre_Adresse">Street: </label>
+                    <input class="input0_formulaires1" type="text" name="<?php echo "street" . $i ?>" value="<?php if (isset($_SESSION["street" . $i])) echo ($_SESSION["street" . $i]) ?>" required>
+                </div>
+                <div class="div_formulaires1"><label class="label1_formulaires1" for="nombre_Adresse">Street_nb: </label>
+                    <input type="number" class="input1_formulaires1" name="<?php echo "street_nb" . $i ?>" value="<?php if (isset($_SESSION["street_nb" . $i])) echo ($_SESSION["street_nb" . $i]) ?>" required>
+                </div>
+
+                <div class="div_formulaires1"> <label class="label2_formulaires1" for=""> Type adresse: </label>
+                    <select class="input2_formulaires1" name="<?php echo "type.$i" ?>" required>
+                        <option value="<?php if (isset($_SESSION["type" . $i])) echo ($_SESSION["type" . $i]) ?>"><?php if (isset($_SESSION["type" . $i])) echo ($_SESSION["type" . $i]) ?> </option>
+                        <option value="Livraison">Lieu</option>
+                        <option value="Livraison">Livraison</option>
+                        <option value="Facture">Facture</option>
+                        <option value="Autre">Autres</option>
+                    </select>
+                </div>
+                <div class="div_formulaires1"> <label class="label3_formulaires1" for=""> City: </label>
+                    <select class="input3_formulaires1" name="<?php echo "city.$i" ?>" required>
+                        <option value="<?php if (isset($_SESSION["city" . $i])) echo ($_SESSION["city" . $i]) ?>"><?php if (isset($_SESSION["city" . $i])) echo ($_SESSION["city" . $i]) ?> </option>
+                        <option value="Toronto">Toronto</option>
+                        <option value="Montréal">Montréal</option>
+                        <option value="Québec">Quebec</option>
+                        <option value="Ottawa">Ottawa</option>
+                    </select>
+                </div>
+                <div class="div_formulaires1"><label class="label4_formulaires1" for="nombre_Adresse">Zipcode: </label>
+                    <input type="text" class="input4_formulaires1" name="<?php echo "zipcode" . $i ?>" value="<?php if (isset($_SESSION["zipcode" . $i])) echo ($_SESSION["zipcode" . $i]) ?>" pattern='\w{6}' title='Six caracteres required' required>
+                </div>
+            <?php } ?>
+            <button id="btn_submit" type="submit">Envoyer</button>
+            </form>
+        </div>
+    </body>
+
+    </html>
