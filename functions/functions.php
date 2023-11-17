@@ -12,7 +12,7 @@ function insertAdresse($data, $i)
         // Liaison des paramètres avec les valeurs
         mysqli_stmt_bind_param(
             $stmt,
-            "sssss",
+            "sisss",
             $data['street' . $i],
             $data['street_nb' . $i],
             $data['type' . $i],
